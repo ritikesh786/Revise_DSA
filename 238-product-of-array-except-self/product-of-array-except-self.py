@@ -1,13 +1,13 @@
 class Solution:
     def productExceptSelf(self, nums: List[int]) -> List[int]:
         n = len(nums)
-        la = [1]*n
-        ra = [1]*n
         output = [1]*n
-        for i in range(1,n):
-            la[i] = la[i-1]*nums[i-1]
-        for i in range(n-2,-1,-1):
-            ra[i] = ra[i+1]*nums[i+1]
-        for i in range(n):
-            output[i] = la[i]*ra[i]
+        for i in range(1, n):
+            output[i] = output[i-1] * nums[i-1]
+
+        # Second pass: calculate ra on-the-fly and multiply
+        ra = 1
+        for i in range(n-1, -1, -1):
+            output[i] = output[i] * ra
+            ra = ra * nums[i]
         return output
